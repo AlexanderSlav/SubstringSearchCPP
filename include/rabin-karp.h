@@ -8,6 +8,6 @@
 #include <string>
 #include <iostream>
 
-std::vector<int> SubstringSearchRabinKarp(std::string source_text, std::string pattern, int r);
+std::vector<int> SubstringSearchRabinKarp(std::string source_text, std::string pattern);
 
 #endif //SUBSTRINGSEARCH_RABIN_KARP_H

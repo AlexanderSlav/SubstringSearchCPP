@@ -7,9 +7,10 @@
 
 // number of characters in alphabet
 # define p 256
+// prime number
+# define r 11
 
-
-std::vector<int> SubstringSearchRabinKarp(std::string source_text, std::string pattern, int r)
+std::vector<int> SubstringSearchRabinKarp(std::string source_text, std::string pattern)
 {
     std::vector<int> answers;
     unsigned long n = source_text.length();

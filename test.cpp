@@ -28,7 +28,7 @@ TEST(BasicTests, RabinKarp)
 {
     std::vector<int> gt_answers;
     gt_answers.push_back(1);
-    EXPECT_EQ(gt_answers, SubstringSearchRabinKarp("ABCD", "BC", 11));
+    EXPECT_EQ(gt_answers, SubstringSearchRabinKarp("ABCD", "BC"));
     // several pattern match
     gt_answers.insert(gt_answers.end(), {4, 7});
     EXPECT_EQ(gt_answers, SubstringSearchKnuthMorrisPratt("ABCDBCgBC", "BC"));
