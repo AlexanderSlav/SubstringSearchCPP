@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.10.2)
 project(SubstringSearch)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -15,5 +15,5 @@ file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.h)
 
 
 add_executable(main main.cpp ${HEADERS} ${SOURCES})
-add_executable(test test.cpp ${SOURCES})
-target_link_libraries(test gtest gtest_main)
+add_executable(test_algos test.cpp ${SOURCES})
+target_link_libraries(test_algos gtest gtest_main)

@@ -10,7 +10,7 @@
 std::tuple<long, std::vector<int>> run(const std::string& source_string,
                                        const std::string& pattern,
                                        const std::function<std::vector<int>
-                                       (std::string,std::string)>& algorithm)
+                                               (std::string,std::string)>& algorithm)
 {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     std::vector<int> answers = algorithm(source_string, pattern);
@@ -41,7 +41,7 @@ std::tuple<long, std::vector<int>> run_benchmark(int algorithm_name, const std::
     }
 }
 
-int main()
+int main(int argc, char *argv[] )
 {
     // could be any prime number
     std::string source_string, pattern;
@@ -49,10 +49,20 @@ int main()
     getline(std::cin, pattern);
     long elapsed_time;
     std::vector<int> answers;
+    std::string algorithm_name;
+    int algorithm_number = atoi(argv[1]);
 
-    tie(elapsed_time, answers)  = run_benchmark(1, source_string, pattern);
-    std::cout << "Algorithm finished work with: "<< elapsed_time << " microseconds" << std::endl;
+    tie(elapsed_time, answers)  = run_benchmark(algorithm_number, source_string, pattern);
+    std::cout << argv[1] << std::endl;
+    if (algorithm_number == 1){
+        algorithm_name = "Rabin-Karp ";
+    }
+    else if (algorithm_number == 2)
+    {
+        algorithm_name = "Knuth-Morris-Pratt ";
+    }
+    std::cout << algorithm_name << "finished work with: "<< elapsed_time << " microseconds" << std::endl;
     for (auto answer : answers)
-        std::cout << "Algorithm Found match with start index: " << answer << std::endl;
+        std::cout << algorithm_name << "found match with start index: " << answer << std::endl;
     return 0;
 }
