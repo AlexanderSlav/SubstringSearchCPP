@@ -4,14 +4,6 @@
 
 #include <iostream>
 
-
-enum Algorithms
-{
-    RabinKarp = 1,
-    KnuthMorrisPratt = 2,
-};
-
-
 std::string gen_random(const int len) {
     static const char alphanum[] =
             "0123456789"

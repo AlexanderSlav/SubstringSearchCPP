@@ -1,19 +1,16 @@
 #include "rabin-karp.h"
+#include "utils.h"
 #include "knuth_morris_pratt.h"
+
 #include <chrono>
 #include <tuple>
 #include <functional>
 
-enum Algorithms
-{
-    RabinKarp = 1,
-    KnuthMorrisPratt = 2,
-};
 
 std::tuple<long, std::vector<int>> run(const std::string& source_string,
                                        const std::string& pattern,
-                                       std::function<std::vector<int>
-                                       (std::string,std::string)> algorithm)
+                                       const std::function<std::vector<int>
+                                       (std::string,std::string)>& algorithm)
 {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     std::vector<int> answers = algorithm(source_string, pattern);
