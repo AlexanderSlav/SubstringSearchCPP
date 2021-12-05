@@ -3,7 +3,6 @@
 #include "knuth_morris_pratt.h"
 
 #include <chrono>
-#include <tuple>
 #include <functional>
 
 
@@ -43,17 +42,16 @@ std::tuple<long, std::vector<int>> run_benchmark(int algorithm_name, const std::
 
 int main(int argc, char *argv[] )
 {
-    // could be any prime number
-    std::string source_string, pattern;
-    getline(std::cin, source_string);
-    getline(std::cin, pattern);
+    // define variables
     long elapsed_time;
     std::vector<int> answers;
     std::string algorithm_name;
+    std::string source_string, pattern;
     int algorithm_number = atoi(argv[1]);
 
+    tie(source_string, pattern) = get_input_data_from_user();
+
     tie(elapsed_time, answers)  = run_benchmark(algorithm_number, source_string, pattern);
-    std::cout << argv[1] << std::endl;
     if (algorithm_number == 1){
         algorithm_name = "Rabin-Karp ";
     }
