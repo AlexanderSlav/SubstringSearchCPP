@@ -1,44 +1,10 @@
-#include "rabin-karp.h"
 #include "utils.h"
-#include "knuth_morris_pratt.h"
+#include <numeric>
+#include <string.h>
+#include <math.h>
 
-#include <chrono>
-#include <functional>
+# define r 2
 
-
-std::tuple<long, std::vector<int>> run(const std::string& source_string,
-                                       const std::string& pattern,
-                                       const std::function<std::vector<int>
-                                               (std::string,std::string)>& algorithm)
-{
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    std::vector<int> answers = algorithm(source_string, pattern);
-    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    long elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
-    return {elapsed_time, answers};
-}
-
-
-std::tuple<long, std::vector<int>> run_benchmark(int algorithm_name, const std::string& input_string, const std::string& pattern)
-{
-    long elapsed_time;
-    std::vector<int> answers;
-
-    switch(algorithm_name)
-    {
-        case KnuthMorrisPratt:
-            tie(elapsed_time, answers) = run(input_string, pattern, SubstringSearchKnuthMorrisPratt);
-            return {elapsed_time, answers};
-        case RabinKarp:
-            tie(elapsed_time, answers) = run(input_string, pattern, SubstringSearchRabinKarp);
-            return {elapsed_time, answers};
-        default:
-        {
-            throw std::invalid_argument("algorithm_name arguments must be 1 or 2");
-        }
-
-    }
-}
 
 int main(int argc, char *argv[] )
 {
@@ -49,18 +15,43 @@ int main(int argc, char *argv[] )
     std::string source_string, pattern;
     int algorithm_number = atoi(argv[1]);
 
-    tie(source_string, pattern) = get_input_data_from_user();
+    std::vector<std::tuple<std::string, std::string>> data;
 
-    tie(elapsed_time, answers)  = run_benchmark(algorithm_number, source_string, pattern);
-    if (algorithm_number == 1){
-        algorithm_name = "Rabin-Karp ";
-    }
-    else if (algorithm_number == 2)
+    if (argc > 2)
     {
-        algorithm_name = "Knuth-Morris-Pratt ";
+        // Benchmark algorithm
+        if (strcmp(argv[2], "auto") == 0) // This compares what the pointers point to
+        {
+            std::vector<int> data_size;
+            int cur_size;
+            for (int i = 4; i < 20; i++)
+            {
+                cur_size = 2 * pow(r, i);
+                tie(source_string, pattern) = gen_random(cur_size, cur_size / 10);
+                data.emplace_back(source_string, pattern);
+            }
+        }
     }
-    std::cout << algorithm_name << "finished work with: "<< elapsed_time << " microseconds" << std::endl;
-    for (auto answer : answers)
-        std::cout << algorithm_name << "found match with start index: " << answer << std::endl;
+    else {
+        tie(source_string, pattern) = get_input_data_from_user();
+    }
+    for (auto&& tuple: data)
+    {
+        std::tie(source_string, pattern ) = tuple;
+        tie(elapsed_time, answers)  = run_benchmark(algorithm_number, source_string, pattern);
+        if (algorithm_number == 1)
+        {
+            algorithm_name = "Rabin-Karp ";
+        }
+        else if (algorithm_number == 2)
+        {
+            algorithm_name = "Knuth-Morris-Pratt ";
+        }
+        std::cout << algorithm_name << "finished work with: "<< elapsed_time << " microseconds" << std::endl;
+
+        for (auto answer : answers)
+            std::cout << algorithm_name << "found match with start index: " << answer << std::endl;
+    }
+
     return 0;
 }
