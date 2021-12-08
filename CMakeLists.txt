@@ -14,6 +14,6 @@ file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 file(GLOB HEADERS ${PROJECT_SOURCE_DIR}/include/*.h)
 
 
-add_executable(main main.cpp ${HEADERS} ${SOURCES})
+add_executable(main main.cpp ${HEADERS} ${SOURCES} include/csv_writer.h)
 add_executable(test_algos test.cpp ${SOURCES})
 target_link_libraries(test_algos gtest gtest_main)

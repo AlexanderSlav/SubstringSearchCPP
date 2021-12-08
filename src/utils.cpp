@@ -23,11 +23,12 @@ std::tuple<std::string, std::string> gen_random(int source_string_len, int patte
     for (int i = 0; i < source_string_len; ++i) {
         source_string += alphanum[rand() % (sizeof(alphanum) - 1)];
     }
-
-    for (int i = 0; i < pattern_len; ++i) {
-        pattern += alphanum[rand() % (sizeof(alphanum) - 1)];
-    }
-
+// generate pattern randomly is not the best option
+//    for (int i = 0; i < pattern_len; ++i) {
+//        pattern += alphanum[rand() % (sizeof(alphanum) - 1)];
+//    }
+// choose random substring
+    pattern = source_string.substr(0, pattern_len);
 
     return {source_string, pattern};
 }
@@ -53,7 +54,7 @@ std::tuple<long, std::vector<int>> run(const std::string& source_string,
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
     std::vector<int> answers = algorithm(source_string, pattern);
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    long elapsed_time = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+    long elapsed_time = std::chrono::duration_cast<std::chrono:: microseconds>(end - begin).count();
     return {elapsed_time, answers};
 }
 
